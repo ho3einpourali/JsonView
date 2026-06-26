@@ -55,13 +55,16 @@ function LandingPage() {
     input.click();
   }, [setJsonContent, router]);
 
-  const handlePasteJson = useCallback(() => {
-    navigator.clipboard.readText().then((text) => {
-      setJsonContent(text);
+  const handlePasteJson = useCallback(async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        setJsonContent(text);
+      }
       router.push("/editor");
-    }).catch(() => {
+    } catch {
       router.push("/editor");
-    });
+    }
   }, [setJsonContent, router]);
 
   const handleSample = useCallback(() => {
